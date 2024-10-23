@@ -1,0 +1,21 @@
+# Ignore environment configuration files (optional)
+.env
+
+# Ignore Composer dependencies
+/vendor/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore temporary files created by editors
+*.swp
+*.bak
+*.tmp
+*.backup
+
+# Ignore logs (if any are generated)
+*.log
+
+# Ignore PHPUnit test result cache (if using PHPUnit)
+.phpunit.result.cache
