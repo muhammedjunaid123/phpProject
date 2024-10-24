@@ -7,9 +7,9 @@ function studentRegister($data)
     try {
         global $conn;
         extract($data);
-        $data['class'] = (int)$data['class'];
-        
-        $sql_insert = "INSERT INTO student(name, email, password, class, division) VALUES ('$name', '$email', '$password', $class, '$division')";
+        $class = (int)$class;
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $sql_insert = "INSERT INTO student(name, email, password, class, division) VALUES ('$name', '$email', '$hashedPassword', $class, '$division')";
         if ($conn->query($sql_insert)) {
             return true;
         } else {
@@ -20,7 +20,27 @@ function studentRegister($data)
     }
 }
 
-function greet($name)
+function studentLogin($data)
 {
-    return "Hello, " . $name . "!";
+    try {
+        global $conn;
+        extract($data);
+        $sql_get = "SELECT * FROM student WHERE email = '$email' LIMIT 1";
+        $result = $conn->query($sql_get);
+        if ($result->num_rows == 1) {
+            $res = mysqli_fetch_assoc($result);
+            $inputPassword = $password;
+            $storedHash = $res['password'];
+
+            if (password_verify($inputPassword, $storedHash)) {
+                echo "Password is valid.";
+            } else {
+                echo "Invalid password.";
+            }
+        } else {
+            echo "No results found.";
+        }
+    } catch (\Throwable $th) {
+        echo $th;
+    }
 }
