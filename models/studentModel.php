@@ -33,12 +33,12 @@ function studentLogin($data)
             $storedHash = $res['password'];
 
             if (password_verify($inputPassword, $storedHash)) {
-                echo "Password is valid.";
+                echo 'Password is valid.';
             } else {
-                echo "Invalid password.";
+                echo 'Invalid password.';
             }
         } else {
-            echo "No results found.";
+            echo 'No results found.';
         }
     } catch (\Throwable $th) {
         echo $th;
