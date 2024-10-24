@@ -25,12 +25,10 @@ function studentLogin($data)
     try {
         global $conn;
         extract($data);
-        $sql_get = "SELECT * FROM student WHERE email = '$email' LIMIT 1";
-        $result = $conn->query($sql_get);
-        if ($result->num_rows == 1) {
-            $res = mysqli_fetch_assoc($result);
+        $result = getStudentDataEmail($email);
+        if (count($result) > 0) {
             $inputPassword = $password;
-            $storedHash = $res['password'];
+            $storedHash = $result['password'];
 
             if (password_verify($inputPassword, $storedHash)) {
                 return $email;
@@ -49,10 +47,52 @@ function getAllStudent()
 {
     try {
         global $conn;
-        $sql_get_all="SELECT * FROM student";
-        $data= $conn->query($sql_get_all);
+        $sql_get_all = "SELECT * FROM student";
+        $data = $conn->query($sql_get_all);
         return $data->fetch_all(MYSQLI_ASSOC);
     } catch (\Throwable $th) {
         //throw $th;
     }
+}
+
+function getStudentDataEmail($email)
+{
+    try {
+        global $conn;
+        $sql_get = "SELECT * FROM student WHERE email = '$email' LIMIT 1";
+        $result = $conn->query($sql_get);
+        return mysqli_fetch_assoc($result);
+    } catch (\Throwable $th) {
+        //throw $th;
+    }
+}
+function addMark($data)
+{
+    try {
+        global $conn;
+        extract($data);
+        if (empty($data['id'])) {
+            $sql_insert = "INSERT INTO marks(std_id,mathematics,science,english,history) VALUES ($std_id, '$mathematics', '$science', '$english', '$history')";
+        } else {
+            $sql_insert = "UPDATE marks 
+            SET mathematics = '$mathematics', science = '$science', english = '$english', history = '$history' 
+            WHERE id = '$id'";
+        }
+        echo $sql_insert;
+        if ($conn->query($sql_insert)) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (\Throwable $th) {
+        //throw $th;
+    }
+}
+
+function getMark($std_id)
+{
+    global $conn;
+    $sql_get = "SELECT * FROM marks WHERE std_id = $std_id LIMIT 1";
+    $result = $conn->query($sql_get);
+    return mysqli_fetch_assoc($result);
 }

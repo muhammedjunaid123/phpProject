@@ -74,7 +74,7 @@ $divisions = array_unique(array_column($students, 'division'));
                                 <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($student['class']); ?></td>
                                 <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($student['division']); ?></td>
                                 <td class="py-2 px-4 border-b">
-                                    <button onclick="addMark('<?php echo htmlspecialchars($student['name']); ?>')" class="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 rounded">
+                                    <button onclick="addMark('<?php echo htmlspecialchars($student['email']); ?>')" class="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 rounded">
                                         Add Mark
                                     </button>
                                 </td>
@@ -91,8 +91,8 @@ $divisions = array_unique(array_column($students, 'division'));
     </div>
 
     <script>
-        function addMark(name) {
-            alert("Add Mark functionality for " + name + " is not implemented in this example.");
+        function addMark(email) {
+            window.location.href=`/markList?email=${email}`
         }
     </script>
 </body>

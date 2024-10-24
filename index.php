@@ -19,11 +19,17 @@ switch (true) {
     case $action == null && $requestUri == '/list':
         listGet();
         break;
+    case $action == null && $requestUri == '/markList':
+        markListGet();
+        break;
     case $action == 'registration':
         registrationPost();
         break;
     case $action == 'login':
         loginPost();
+        break;
+    case $action == 'markList':
+        markListPost();
         break;
     default:
         http_response_code(404);

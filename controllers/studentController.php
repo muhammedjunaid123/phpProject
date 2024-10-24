@@ -40,6 +40,19 @@ function homeGet()
 function listGet()
 {
     $students = getAllStudent();
-   
+
     require('./views/list.php');
+}
+
+function markListGet()
+{
+    $email = $_GET['email'];
+    $data = getStudentDataEmail($email);
+    $mark = getMark($data['id']);
+    require('./views/markList.php');
+}
+
+function markListPost()
+{
+    $res = addMark($_POST); 
 }
