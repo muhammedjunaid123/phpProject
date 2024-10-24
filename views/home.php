@@ -4,7 +4,13 @@ $student = [
     'name' => 'John Doe',
     'email' => 'john.doe@example.com',
     'class' => '10th Grade',
-    'division' => 'A'
+    'division' => 'A',
+    'subjects' => [
+        'Mathematics' => 85,
+        'Science' => 90,
+        'English' => 88,
+        'History' => 75,
+    ]
 ];
 
 // Check if form is submitted and update student data (for demonstration)
@@ -54,6 +60,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <p class="text-gray-700 mt-2">
                             <span class="font-semibold">Division:</span> <?php echo $student['division']; ?>
                         </p>
+                    </div>
+
+                    <!-- Subjects and Marks -->
+                    <div class="bg-gray-100 p-4 rounded-lg shadow-inner mb-6">
+                        <h2 class="text-lg font-semibold">Subjects and Marks</h2>
+                        <ul class="mt-2">
+                            <?php foreach ($student['subjects'] as $subject => $mark): ?>
+                                <li class="text-gray-700">
+                                    <span class="font-semibold"><?php echo $subject; ?>:</span> <?php echo $mark; ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
                     </div>
 
                     <!-- Edit Button -->

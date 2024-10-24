@@ -1,18 +1,25 @@
 <?php
 
-require('../models/studentModel.php');
+require('./models/studentModel.php');
 
 use \Firebase\JWT\JWT;
 
-$url = $_SERVER['HTTP_REFERER'];
-$url = explode('/', $url);
-$index = count($url);
-$ref = $url[$index - 1];
-if ($ref == 'registration.php' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+function registrationGet()
+{
+    require('./views/registration.php');
+}
+function registrationPost()
+{
     if (studentRegister($_POST)) {
-        header('location:/views/login.php');
+        header('location:/login');
     };
-} elseif ($ref == 'login.php' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+}
+function loginGet()
+{
+    require('./views/login.php');
+}
+function loginPost()
+{
     $data = studentLogin($_POST);
     if (!$data) {
         echo "not found";
@@ -23,5 +30,16 @@ if ($ref == 'registration.php' && $_SERVER['REQUEST_METHOD'] == 'POST') {
     ];
     $token = JWT::encode($payload, $_ENV['jwtsecret'], 'HS256');
     setcookie('token', $token, time() + (2 * 24 * 60 * 60), '/', "");
-    header('location:/views/home.php');
+    header('location:/home');
+}
+
+function homeGet()
+{
+    require('./views/home.php');
+}
+function listGet()
+{
+    $students = getAllStudent();
+   
+    require('./views/list.php');
 }

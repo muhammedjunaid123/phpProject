@@ -1,6 +1,6 @@
 <?php
 
-require('../config/sqlConfig.php');
+require('./config/sqlConfig.php');
 
 function studentRegister($data)
 {
@@ -33,14 +33,26 @@ function studentLogin($data)
             $storedHash = $res['password'];
 
             if (password_verify($inputPassword, $storedHash)) {
-              return $email;
+                return $email;
             } else {
-               return false;
+                return false;
             }
         } else {
             return false;
         }
     } catch (\Throwable $th) {
         echo $th;
+    }
+}
+
+function getAllStudent()
+{
+    try {
+        global $conn;
+        $sql_get_all="SELECT * FROM student";
+        $data= $conn->query($sql_get_all);
+        return $data->fetch_all(MYSQLI_ASSOC);
+    } catch (\Throwable $th) {
+        //throw $th;
     }
 }

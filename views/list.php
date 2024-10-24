@@ -1,13 +1,4 @@
 <?php
-// Sample student data
-$students = [
-    ['name' => 'John Doe', 'email' => 'john.doe@example.com', 'class' => '10th Grade', 'division' => 'A'],
-    ['name' => 'Jane Smith', 'email' => 'jane.smith@example.com', 'class' => '11th Grade', 'division' => 'B'],
-    ['name' => 'Alice Johnson', 'email' => 'alice.johnson@example.com', 'class' => '10th Grade', 'division' => 'A'],
-    ['name' => 'Bob Brown', 'email' => 'bob.brown@example.com', 'class' => '12th Grade', 'division' => 'C'],
-];
-
-// Check if filters are set
 $filterName = isset($_POST['filter_name']) ? $_POST['filter_name'] : '';
 $filterClass = isset($_POST['filter_class']) ? $_POST['filter_class'] : '';
 $filterDivision = isset($_POST['filter_division']) ? $_POST['filter_division'] : '';
@@ -83,8 +74,8 @@ $divisions = array_unique(array_column($students, 'division'));
                                 <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($student['class']); ?></td>
                                 <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($student['division']); ?></td>
                                 <td class="py-2 px-4 border-b">
-                                    <button onclick="showMark('<?php echo htmlspecialchars($student['name']); ?>')" class="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 rounded">
-                                        Show Mark
+                                    <button onclick="addMark('<?php echo htmlspecialchars($student['name']); ?>')" class="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 rounded">
+                                        Add Mark
                                     </button>
                                 </td>
                             </tr>
@@ -100,8 +91,8 @@ $divisions = array_unique(array_column($students, 'division'));
     </div>
 
     <script>
-        function showMark(name) {
-            alert("Show Mark functionality for " + name + " is not implemented in this example.");
+        function addMark(name) {
+            alert("Add Mark functionality for " + name + " is not implemented in this example.");
         }
     </script>
 </body>

@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Page</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="w-full max-w-3xl bg-white shadow-lg rounded-lg p-8">
         <h2 class="text-2xl font-bold text-center mb-6">Register</h2>
-        <form action="../controllers/studentController.php" method="POST">
+        <form action="../index.php" method="POST">
+            <input type="hidden" name="action" value="registration">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="mb-4">
                     <label for="name" class="block text-gray-700 text-sm font-semibold mb-2">Name</label>
@@ -37,4 +40,5 @@
         <p class="mt-4 text-center text-gray-600">Already have an account? <a href="login.php" class="text-blue-500 hover:underline">Login here</a>.</p>
     </div>
 </body>
+
 </html>
