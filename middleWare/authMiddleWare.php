@@ -14,6 +14,6 @@ function jwtAuth()
             throw new Exception("Unauthorized!");
         }
     } catch (\Throwable $th) {
-        return;
+       return;
     }
 }

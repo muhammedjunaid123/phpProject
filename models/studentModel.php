@@ -2,15 +2,38 @@
 
 require('./config/sqlConfig.php');
 require('./middleWare/authMiddleWare.php');
+
 function studentRegister($data)
 {
     try {
         global $conn;
-        extract($data);
-        $class = (int)$class;
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $sql_insert = "INSERT INTO student(name, email, password, class, division) VALUES ('$name', '$email', '$hashedPassword', $class, '$division')";
-        if ($conn->query($sql_insert)) {
+
+        // Extract and sanitize inputs
+        $name = htmlspecialchars(trim($data['name']));
+        $email = filter_var($data['email'], FILTER_SANITIZE_EMAIL);
+        $class = (int)$data['class'];
+        $division = htmlspecialchars(trim($data['division']));
+
+        if ($name === '') {
+            throw new Exception("Invalid name format");
+        }
+        // Validate email format
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new Exception("Invalid email format");
+        }
+
+        // Hash the password securely
+        $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
+
+        // Use a prepared statement to prevent SQL injection
+        $sql_insert = "INSERT INTO student (name, email, password, class, division) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql_insert);
+
+        // Bind parameters
+        $stmt->bind_param("sssds", $name, $email, $hashedPassword, $class, $division);
+
+        // Execute the statement
+        if ($stmt->execute()) {
             return true;
         } else {
             return false;
@@ -20,36 +43,47 @@ function studentRegister($data)
     }
 }
 
+
 function studentLogin($data)
 {
     try {
         global $conn;
         extract($data);
+
         $result = getStudentDataEmail($email);
-        if (count($result) > 0) {
+        if (!empty($result)) {
             $inputPassword = $password;
             $storedHash = $result['password'];
 
+            // Verify the input password with the stored hash
             if (password_verify($inputPassword, $storedHash)) {
-                return $email;
+                return $email; // Login successful
             } else {
-                return false;
+                throw new Exception("Incorrect password");
             }
         } else {
-            return false;
+            throw new Exception("user not found");
         }
     } catch (Exception $e) {
         throw new Exception("Database error: " . $e->getMessage());
     }
 }
 
+
 function getAllStudent()
 {
     try {
         global $conn;
-        $sql_get_all = "SELECT * FROM student";
-        $data = $conn->query($sql_get_all);
-        return $data->fetch_all(MYSQLI_ASSOC);
+
+        $stmt = $conn->prepare("SELECT * FROM student");
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+
+        $stmt->close();
+
+        return $data;
     } catch (Exception $e) {
         throw new Exception("Database error: " . $e->getMessage());
     }
@@ -59,64 +93,99 @@ function getStudentDataEmail($email)
 {
     try {
         global $conn;
-        $sql_get = "SELECT * FROM student WHERE email = '$email' LIMIT 1";
-        $result = $conn->query($sql_get);
-        return mysqli_fetch_assoc($result);
+
+        // Prepare the SQL statement
+        $stmt = $conn->prepare("SELECT * FROM student WHERE email = ? LIMIT 1");
+        $stmt->bind_param("s", $email); // Bind the parameter as a string
+        $stmt->execute();
+
+        // Fetch the result
+        $result = $stmt->get_result();
+        $data = $result->fetch_assoc();
+
+        // Close the statement
+        $stmt->close();
+
+        return $data ? $data : []; // Return an empty array if no data found
     } catch (Exception $e) {
         throw new Exception("Database error: " . $e->getMessage());
     }
 }
+
 function addMark($data)
 {
     try {
         global $conn;
         extract($data);
+
         if (empty($data['id'])) {
-            $sql_insert = "INSERT INTO marks(std_id,mathematics,science,english,history) VALUES ($std_id, '$mathematics', '$science', '$english', '$history')";
+            // Prepare the INSERT statement
+            $stmt = $conn->prepare("INSERT INTO marks (std_id, mathematics, science, english, history) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("issss", $std_id, $mathematics, $science, $english, $history);
         } else {
-            $sql_insert = "UPDATE marks 
-            SET mathematics = '$mathematics', science = '$science', english = '$english', history = '$history' 
-            WHERE id = '$id'";
+            // Prepare the UPDATE statement
+            $stmt = $conn->prepare("UPDATE marks SET mathematics = ?, science = ?, english = ?, history = ? WHERE id = ?");
+            $stmt->bind_param("ssssi", $mathematics, $science, $english, $history, $id);
         }
-        echo $sql_insert;
-        if ($conn->query($sql_insert)) {
-            return true;
+
+        // Execute the prepared statement
+        if ($stmt->execute()) {
+            $stmt->close(); // Close the statement
+            return true; // Return true on success
         } else {
-            return false;
+            $stmt->close(); // Close the statement
+            return false; // Return false on failure
         }
     } catch (Exception $e) {
         throw new Exception("Database error: " . $e->getMessage());
     }
 }
 
+
 function getMark($std_id)
 {
     try {
         global $conn;
-        $sql_get = "SELECT * FROM marks WHERE std_id = $std_id LIMIT 1";
-        $result = $conn->query($sql_get);
-        return mysqli_fetch_assoc($result);
+
+        // Prepare the SQL statement
+        $stmt = $conn->prepare("SELECT * FROM marks WHERE std_id = ? LIMIT 1");
+        $stmt->bind_param("i", $std_id); // Bind the parameter as an integer
+        $stmt->execute();
+
+        // Fetch the result
+        $result = $stmt->get_result();
+        $data = $result->fetch_assoc();
+
+        // Close the statement
+        $stmt->close();
+
+        return $data ? $data : []; // Return an empty array if no data found
     } catch (Exception $e) {
         throw new Exception("Database error: " . $e->getMessage());
     }
 }
+
 
 function updateStudent($data)
 {
     try {
         global $conn;
         extract($data);
-        $sql_update = "UPDATE student 
-    SET name = '$name', 
-        class = $class, 
-        division = '$division' 
-    WHERE email = '$email'";
-        if ($conn->query($sql_update)) {
+
+        // Prepare the SQL statement
+        $stmt = $conn->prepare("UPDATE student SET name = ?, class = ?, division = ? WHERE email = ?");
+        $stmt->bind_param("siss", $name, $class, $division, $email); // Bind the parameters
+
+        // Execute the prepared statement
+        if ($stmt->execute()) {
+            $stmt->close(); // Close the statement
             return true;
         } else {
+            $stmt->close(); // Close the statement
             return false;
         }
     } catch (Exception $e) {
         throw new Exception("Database error: " . $e->getMessage());
     }
 }
+

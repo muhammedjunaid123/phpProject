@@ -250,7 +250,7 @@ function markListPost()
 
         $res = addMark($_POST);
         if ($res) {
-            header('location:/mark-success');
+            header('location:/list');
         } else {
             error_log("Failed to add marks for data: " . json_encode($_POST));
             header('location:/error');

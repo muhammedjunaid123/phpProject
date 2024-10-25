@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,8 +12,19 @@
             document.getElementById('view-mode').classList.toggle('hidden');
             document.getElementById('edit-mode').classList.toggle('hidden');
         }
+
+        // Function to log out (clear all cookies)
+        function logout() {
+            // Loop through all cookies and clear them
+            document.cookie.split(";").forEach((cookie) => {
+                const cookieName = cookie.split("=")[0].trim();
+                document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+            });
+            window.location.href = "/login";
+        }
     </script>
 </head>
+
 <body class="bg-gray-100 font-sans relative">
     <div class="min-h-screen flex items-center justify-center">
         <div class="bg-white shadow-lg rounded-lg max-w-sm w-full p-6">
@@ -43,12 +54,20 @@
                     <div class="bg-gray-100 p-4 rounded-lg shadow-inner mb-6">
                         <h2 class="text-lg font-semibold">Subjects and Marks</h2>
                         <ul class="mt-2">
-                            <?php foreach ($mark as $subject => $mark): ?>
-                                <li class="text-gray-700">
-                                    <span class="font-semibold"><?php echo $subject; ?>:</span> <?php echo $mark; ?>
-                                </li>
-                            <?php endforeach; ?>
+                            <li class="text-gray-700">
+                                <span class="font-semibold">Mathematics:</span> <?php echo htmlspecialchars($mark['mathematics'])?>
+                            </li>
+                            <li class="text-gray-700">
+                                <span class="font-semibold">Science:</span> <?php echo htmlspecialchars($mark['science'])?>
+                            </li>
+                            <li class="text-gray-700">
+                                <span class="font-semibold">English:</span> <?php echo htmlspecialchars($mark['english'])?>
+                            </li>
+                            <li class="text-gray-700">
+                                <span class="font-semibold">History:</span><?php echo htmlspecialchars($mark['history'])?>
+                            </li>
                         </ul>
+
                     </div>
 
                     <!-- Edit Button -->
@@ -61,10 +80,10 @@
             <!-- Edit Mode -->
             <div id="edit-mode" class="hidden">
                 <form method="POST" action="../index.php">
-                <input type="hidden" name="action" value="updateStudent">
+                    <input type="hidden" name="action" value="updateStudent">
                     <div class="text-center">
                         <h1 class="text-3xl font-bold text-green-600 mb-4">Edit Profile</h1>
-                        
+
                         <div class="mb-6">
                             <label for="name" class="block text-gray-700 font-semibold">Name</label>
                             <input type="text" id="name" name="name" value="<?php echo $student['name']; ?>" class="mt-1 p-2 w-full bg-gray-100 rounded-lg border border-gray-300">
@@ -98,11 +117,18 @@
         </div>
     </div>
 
-    <!-- Student List Button at Top Right Corner -->
-    <div class="absolute top-4 right-4">
+    <!-- Top Right Corner Buttons -->
+    <div class="absolute top-4 right-4 space-x-4">
+        <!-- Student List Button -->
         <a href="list" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-full transition duration-300">
             Student List
         </a>
+
+        <!-- Logout Button -->
+        <button onclick="logout()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+            Logout
+        </button>
     </div>
 </body>
+
 </html>
