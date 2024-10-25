@@ -55,16 +55,16 @@
                         <h2 class="text-lg font-semibold">Subjects and Marks</h2>
                         <ul class="mt-2">
                             <li class="text-gray-700">
-                                <span class="font-semibold">Mathematics:</span> <?php echo htmlspecialchars($mark['mathematics'])?>
+                                <span class="font-semibold">Mathematics:</span> <?php echo htmlspecialchars($mark['mathematics']??"not updated")?>
                             </li>
                             <li class="text-gray-700">
-                                <span class="font-semibold">Science:</span> <?php echo htmlspecialchars($mark['science'])?>
+                                <span class="font-semibold">Science:</span> <?php echo htmlspecialchars($mark['science']??"not updated")?>
                             </li>
                             <li class="text-gray-700">
-                                <span class="font-semibold">English:</span> <?php echo htmlspecialchars($mark['english'])?>
+                                <span class="font-semibold">English:</span> <?php echo htmlspecialchars($mark['english']??"not updated")?>
                             </li>
                             <li class="text-gray-700">
-                                <span class="font-semibold">History:</span><?php echo htmlspecialchars($mark['history'])?>
+                                <span class="font-semibold">History:</span><?php echo htmlspecialchars($mark['history']??"not updated")?>
                             </li>
                         </ul>
 

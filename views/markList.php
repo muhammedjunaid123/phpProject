@@ -30,22 +30,22 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div class="mb-4">
                         <label for="maths" class="block text-gray-700 mb-2">Maths</label>
-                        <input type="number" id="maths" name="mathematics" value="<?php echo $mark['mathematics'] ?>" required class="p-2 border border-gray-300 rounded-lg w-full" placeholder="Enter Maths marks..." min="0" max="100">
+                        <input type="number" id="maths" name="mathematics" value="<?php echo $mark['mathematics']??"not updated" ?>" required class="p-2 border border-gray-300 rounded-lg w-full" placeholder="Enter Maths marks..." min="0" max="100">
                     </div>
 
                     <div class="mb-4">
                         <label for="english" class="block text-gray-700 mb-2">English</label>
-                        <input type="number" id="english" name="english" value="<?php echo $mark['english'] ?>" required class="p-2 border border-gray-300 rounded-lg w-full" placeholder="Enter English marks..." min="0" max="100">
+                        <input type="number" id="english" name="english" value="<?php echo $mark['english']??"not updated" ?>" required class="p-2 border border-gray-300 rounded-lg w-full" placeholder="Enter English marks..." min="0" max="100">
                     </div>
 
                     <div class="mb-4">
                         <label for="science" class="block text-gray-700 mb-2">Science</label>
-                        <input type="number" id="science" name="science" value="<?php echo $mark['science'] ?>" required class="p-2 border border-gray-300 rounded-lg w-full" placeholder="Enter Science marks..." min="0" max="100">
+                        <input type="number" id="science" name="science" value="<?php echo $mark['science']??"not updated" ?>" required class="p-2 border border-gray-300 rounded-lg w-full" placeholder="Enter Science marks..." min="0" max="100">
                     </div>
 
                     <div class="mb-4">
                         <label for="hindi" class="block text-gray-700 mb-2">history</label>
-                        <input type="number" id="hindi" name="history" value="<?php echo $mark['history'] ?>" required class="p-2 border border-gray-300 rounded-lg w-full" placeholder="Enter history marks..." min="0" max="100">
+                        <input type="number" id="hindi" name="history" value="<?php echo $mark['history']??"not updated" ?>" required class="p-2 border border-gray-300 rounded-lg w-full" placeholder="Enter history marks..." min="0" max="100">
                     </div>
                 </div>
 
