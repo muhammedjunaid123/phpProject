@@ -1,14 +1,3 @@
-<?php
-// Hardcoded student data
-
-// Check if form is submitted and update student data (for demonstration)
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $student['name'] = $_POST['name'];
-    $student['email'] = $_POST['email'];
-    $student['class'] = $_POST['class'];
-    $student['division'] = $_POST['division'];
-}
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     </script>
 </head>
-<body class="bg-gray-100 font-sans">
+<body class="bg-gray-100 font-sans relative">
     <div class="min-h-screen flex items-center justify-center">
         <div class="bg-white shadow-lg rounded-lg max-w-sm w-full p-6">
             <!-- View Mode -->
@@ -83,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <div class="mb-6">
                             <label for="email" class="block text-gray-700 font-semibold">Email</label>
-                            <input type="email" id="email" name="email" readonly  value="<?php echo $student['email']; ?>" class="mt-1 p-2 w-full bg-gray-100 rounded-lg border border-gray-300">
+                            <input type="email" id="email" name="email" readonly value="<?php echo $student['email']; ?>" class="mt-1 p-2 w-full bg-gray-100 rounded-lg border border-gray-300">
                         </div>
 
                         <div class="mb-6">
@@ -107,6 +96,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </form>
             </div>
         </div>
+    </div>
+
+    <!-- Student List Button at Top Right Corner -->
+    <div class="absolute top-4 right-4">
+        <a href="list" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+            Student List
+        </a>
     </div>
 </body>
 </html>
