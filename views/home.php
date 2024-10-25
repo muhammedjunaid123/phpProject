@@ -71,7 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <!-- Edit Mode -->
             <div id="edit-mode" class="hidden">
-                <form method="POST">
+                <form method="POST" action="../index.php">
+                <input type="hidden" name="action" value="updateStudent">
                     <div class="text-center">
                         <h1 class="text-3xl font-bold text-green-600 mb-4">Edit Profile</h1>
                         
@@ -82,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <div class="mb-6">
                             <label for="email" class="block text-gray-700 font-semibold">Email</label>
-                            <input type="email" id="email" name="email" value="<?php echo $student['email']; ?>" class="mt-1 p-2 w-full bg-gray-100 rounded-lg border border-gray-300">
+                            <input type="email" id="email" name="email" readonly  value="<?php echo $student['email']; ?>" class="mt-1 p-2 w-full bg-gray-100 rounded-lg border border-gray-300">
                         </div>
 
                         <div class="mb-6">

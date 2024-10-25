@@ -83,3 +83,9 @@ function markListPost()
      }
     $res = addMark($_POST);
 }
+
+function updateStudentData(){
+    if(updateStudent($_POST)){
+        header('location:/home');
+    }
+}

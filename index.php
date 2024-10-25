@@ -31,6 +31,9 @@ switch (true) {
     case $action == 'markList':
         markListPost();
         break;
+    case $action == 'updateStudent':
+        updateStudentData();
+        break;
     default:
         http_response_code(404);
         echo "404 Not Found";

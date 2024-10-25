@@ -96,3 +96,19 @@ function getMark($std_id)
     $result = $conn->query($sql_get);
     return mysqli_fetch_assoc($result);
 }
+
+function updateStudent($data)
+{
+    global $conn;
+    extract($data);
+    $sql_update = "UPDATE student 
+    SET name = '$name', 
+        class = $class, 
+        division = '$division' 
+    WHERE email = '$email'";
+    if ($conn->query($sql_update)) {
+        return true;
+    } else {
+        return false;
+    }
+}
