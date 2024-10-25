@@ -37,7 +37,7 @@
             </div>
             <button type="submit" class="w-full bg-blue-500 text-white font-semibold py-2 rounded hover:bg-blue-600 transition duration-200 mt-6">Register</button>
         </form>
-        <p class="mt-4 text-center text-gray-600">Already have an account? <a href="login.php" class="text-blue-500 hover:underline">Login here</a>.</p>
+        <p class="mt-4 text-center text-gray-600">Already have an account? <a href="/login" class="text-blue-500 hover:underline">Login here</a>.</p>
     </div>
 </body>
 

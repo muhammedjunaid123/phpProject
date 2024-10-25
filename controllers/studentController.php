@@ -7,20 +7,32 @@ use Firebase\JWT\Key;
 
 function registrationGet()
 {
+    if(jwtAuth()){
+        header("location:/home");
+    }
     require('./views/registration.php');
 }
 function registrationPost()
 {
+    if(jwtAuth()){
+        header("location:/home");
+    }
     if (studentRegister($_POST)) {
         header('location:/login');
     };
 }
 function loginGet()
 {
+    if(jwtAuth()){
+        header("location:/home");
+    }
     require('./views/login.php');
 }
 function loginPost()
 {
+    if(jwtAuth()){
+        header("location:/home");
+    }
     $data = studentLogin($_POST);
     if (!$data) {
         echo "not found";
@@ -36,20 +48,28 @@ function loginPost()
 
 function homeGet()
 {
-    $token = $_COOKIE['token'];
-    $data = JWT::decode($token, new Key($_ENV['jwtsecret'], 'HS256'));
+     if(!jwtAuth()){
+        header('location:/');
+     }
+    $data =jwtAuth();
     $student=getStudentDataEmail($data->email);
     $mark=getMark($student['id']);
     require('./views/home.php');
 }
 function listGet()
 {
+    if(!jwtAuth()){
+        header('location:/');
+     }
     $students = getAllStudent();
     require('./views/list.php');
 }
 
 function markListGet()
 {
+    if(!jwtAuth()){
+        header('location:/');
+     }
     $email = $_GET['email'];
     $data = getStudentDataEmail($email);
     $mark = getMark($data['id']);
@@ -58,5 +78,8 @@ function markListGet()
 
 function markListPost()
 {
+    if(!jwtAuth()){
+        header('location:/');
+     }
     $res = addMark($_POST);
 }

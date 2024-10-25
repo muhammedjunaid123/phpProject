@@ -11,7 +11,8 @@
   <div class="w-full max-w-sm md:max-w-md lg:max-w-lg bg-white rounded-lg shadow-md p-6">
     <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
     
-    <form action="../controllers/studentController.php" method="POST" class="space-y-4">
+    <form action="../index.php" method="POST" class="space-y-4">
+    <input type="hidden" name="action" value="login">
       <div>
         <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
         <input type="email" id="email" name="email" required 
@@ -30,7 +31,7 @@
     </form>
 
     <p class="text-sm text-center text-gray-600 mt-6">
-      Don't have an account? <a href="registration.php" class="text-blue-600 hover:underline">Sign up</a>
+      Don't have an account? <a href="/registration" class="text-blue-600 hover:underline">Sign up</a>
     </p>
   </div>
 

@@ -1,7 +1,7 @@
 <?php
 
 require('./config/sqlConfig.php');
-
+require('./middleWare/authMiddleWare.php');
 function studentRegister($data)
 {
     try {
