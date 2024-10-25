@@ -14,7 +14,7 @@ switch (true) {
         loginGet();
         break;
     case $action == null && $requestUri == '/home':
-        loginGet();
+        homeGet();
         break;
     case $action == null && $requestUri == '/list':
         listGet();

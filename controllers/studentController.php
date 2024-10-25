@@ -3,6 +3,7 @@
 require('./models/studentModel.php');
 
 use \Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 function registrationGet()
 {
@@ -35,12 +36,15 @@ function loginPost()
 
 function homeGet()
 {
+    $token = $_COOKIE['token'];
+    $data = JWT::decode($token, new Key($_ENV['jwtsecret'], 'HS256'));
+    $student=getStudentDataEmail($data->email);
+    $mark=getMark($student['id']);
     require('./views/home.php');
 }
 function listGet()
 {
     $students = getAllStudent();
-
     require('./views/list.php');
 }
 
@@ -54,5 +58,5 @@ function markListGet()
 
 function markListPost()
 {
-    $res = addMark($_POST); 
+    $res = addMark($_POST);
 }
