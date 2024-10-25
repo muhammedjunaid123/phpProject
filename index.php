@@ -22,6 +22,9 @@ switch (true) {
     case $action == null && $requestUri == '/markList':
         markListGet();
         break;
+        case $action == null && $requestUri == '/error':
+            loadErrorPage();
+            break;
     case $action == 'registration':
         registrationPost();
         break;

@@ -15,8 +15,8 @@ function studentRegister($data)
         } else {
             return false;
         }
-    } catch (\Throwable $th) {
-        return $th;
+    } catch (Exception $e) {
+        throw new Exception("Database error: " . $e->getMessage());
     }
 }
 
@@ -38,8 +38,8 @@ function studentLogin($data)
         } else {
             return false;
         }
-    } catch (\Throwable $th) {
-        echo $th;
+    } catch (Exception $e) {
+        throw new Exception("Database error: " . $e->getMessage());
     }
 }
 
@@ -50,8 +50,8 @@ function getAllStudent()
         $sql_get_all = "SELECT * FROM student";
         $data = $conn->query($sql_get_all);
         return $data->fetch_all(MYSQLI_ASSOC);
-    } catch (\Throwable $th) {
-        //throw $th;
+    } catch (Exception $e) {
+        throw new Exception("Database error: " . $e->getMessage());
     }
 }
 
@@ -62,8 +62,8 @@ function getStudentDataEmail($email)
         $sql_get = "SELECT * FROM student WHERE email = '$email' LIMIT 1";
         $result = $conn->query($sql_get);
         return mysqli_fetch_assoc($result);
-    } catch (\Throwable $th) {
-        //throw $th;
+    } catch (Exception $e) {
+        throw new Exception("Database error: " . $e->getMessage());
     }
 }
 function addMark($data)
@@ -84,31 +84,39 @@ function addMark($data)
         } else {
             return false;
         }
-    } catch (\Throwable $th) {
-        //throw $th;
+    } catch (Exception $e) {
+        throw new Exception("Database error: " . $e->getMessage());
     }
 }
 
 function getMark($std_id)
 {
-    global $conn;
-    $sql_get = "SELECT * FROM marks WHERE std_id = $std_id LIMIT 1";
-    $result = $conn->query($sql_get);
-    return mysqli_fetch_assoc($result);
+    try {
+        global $conn;
+        $sql_get = "SELECT * FROM marks WHERE std_id = $std_id LIMIT 1";
+        $result = $conn->query($sql_get);
+        return mysqli_fetch_assoc($result);
+    } catch (Exception $e) {
+        throw new Exception("Database error: " . $e->getMessage());
+    }
 }
 
 function updateStudent($data)
 {
-    global $conn;
-    extract($data);
-    $sql_update = "UPDATE student 
+    try {
+        global $conn;
+        extract($data);
+        $sql_update = "UPDATE student 
     SET name = '$name', 
         class = $class, 
         division = '$division' 
     WHERE email = '$email'";
-    if ($conn->query($sql_update)) {
-        return true;
-    } else {
-        return false;
+        if ($conn->query($sql_update)) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (Exception $e) {
+        throw new Exception("Database error: " . $e->getMessage());
     }
 }
